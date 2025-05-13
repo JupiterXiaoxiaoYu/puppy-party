@@ -26,4 +26,20 @@ export class Player extends PlayerConvention {
       console.log("command error:", reason);
     }
   }
+
+  async createPlayer(player: PlayerConvention) {
+    try {
+      const CREATE_PLAYER = 1n;
+      let result = await this.rpc.sendTransaction(
+        createCommand(0n, CREATE_PLAYER, []),
+        player.processingKey
+      );
+      return result;
+    } catch(e) {
+      if(e instanceof Error) {
+        console.log(e.message);
+      }
+      console.log("create Player error");
+    }
+  }
 }
